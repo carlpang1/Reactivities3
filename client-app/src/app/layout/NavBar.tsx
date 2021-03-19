@@ -11,7 +11,7 @@ export default observer(function NavBar() {
       <Container>
         <Menu.Item exact as={NavLink} to="/" header>
           <img
-            src="assets/logo.png"
+            src="/assets/logo.png"
             alt="logo"
             style={{ marginRight: "10px" }}
           />
