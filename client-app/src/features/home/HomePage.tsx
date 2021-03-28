@@ -1,7 +1,19 @@
 import { Link } from "react-router-dom";
-import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
+import {
+  Button,
+  Container,
+  Header,
+  Image,
+  Modal,
+  Segment,
+} from "semantic-ui-react";
+import ModalContainer from "../../app/common/modals/ModalContainer";
+import LoginForm from "../users/LoginForm";
+import RegisterForm from "../users/RegisterForm";
+import { useStore } from "./../../app/stores/store";
 
 export default function HomePage() {
+  const { userStore, modalStore } = useStore();
   return (
     <Segment inverted textAlign="center" vertical className="masthead">
       <Container text>
@@ -14,10 +26,31 @@ export default function HomePage() {
           />
           Reactivities
         </Header>
-        <Header as="h2" inverted content="Welcome to Reactivities" />
-        <Button as={Link} to="/activities" size="huge" inverted>
-          Take me to the Activities!
-        </Button>
+        {userStore.isLoggedIn ? (
+          <>
+            <Header as="h2" inverted content="Welcome to Reactivities" />
+            <Button as={Link} to="/activities" size="huge" inverted>
+              Go to Activities
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              onClick={() => modalStore.openModal(<LoginForm />)}
+              size="huge"
+              inverted
+            >
+              Login
+            </Button>
+            <Button
+              onClick={() => modalStore.openModal(<RegisterForm />)}
+              size="huge"
+              inverted
+            >
+              Register
+            </Button>
+          </>
+        )}
       </Container>
     </Segment>
   );
