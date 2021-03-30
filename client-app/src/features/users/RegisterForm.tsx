@@ -8,7 +8,7 @@ import ValidationErrors from "../errors/ValidationErrors";
 
 export default observer(function RegisterForm() {
   const { userStore } = useStore();
-  return (
+  return ( 
     <Formik
       initialValues={{
         username: "",
