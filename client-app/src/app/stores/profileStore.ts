@@ -1,10 +1,7 @@
 import { Photo, Profile } from "../models/profile";
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
-import UserStore from "./userStore";
 import { store } from "./store";
-import userEvent from "@testing-library/user-event";
-import { threadId } from "node:worker_threads";
 
 export default class ProfileStore {
   profile: Profile | null = null;
@@ -36,6 +33,23 @@ export default class ProfileStore {
       console.log(error);
       runInAction(() => {
         this.loadingProfile = false;
+      });
+    }
+  };
+
+  updateProfile = async (profile: Partial<Profile>) => {
+    this.loading = true;
+    try {
+      await agent.Profiles.update(profile);
+      runInAction(() => {
+        if (this.profile) this.profile = { ...this.profile, ...profile };
+        store.userStore.setDisplayName(profile.displayName!);
+        this.loading = false;
+      });
+    } catch (error) {
+      console.log(error);
+      runInAction(() => {
+        this.loading = false;
       });
     }
   };
@@ -81,18 +95,15 @@ export default class ProfileStore {
   };
 
   deletePhoto = async (id: string) => {
-    this.loading = true;
     try {
       await agent.Profiles.deletePhoto(id);
       runInAction(() => {
         if (this.profile && this.profile.photos) {
           this.profile.photos = this.profile?.photos.filter((p) => p.id !== id);
-          this.loading = false;
         }
       });
     } catch (error) {
       console.log(error);
-      runInAction(() => (this.loading = false));
     }
   };
 }
