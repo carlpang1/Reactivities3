@@ -1,18 +1,19 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import {
-  Button,
   Container,
   Header,
-  Image,
-  Modal,
   Segment,
+  Image,
+  Button,
+  Divider,
 } from "semantic-ui-react";
-import ModalContainer from "../../app/common/modals/ModalContainer";
+import { useStore } from "../../app/stores/store";
 import LoginForm from "../users/LoginForm";
 import RegisterForm from "../users/RegisterForm";
-import { useStore } from "./../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-export default function HomePage() {
+export default observer(function HomePage() {
   const { userStore, modalStore } = useStore();
   return (
     <Segment inverted textAlign="center" vertical className="masthead">
@@ -49,9 +50,21 @@ export default function HomePage() {
             >
               Register
             </Button>
+            <Divider horizontal inverted>
+              Or
+            </Divider>
+            <Button
+              loading={userStore.fbLoading}
+              size="huge"
+              inverted
+              color="facebook"
+              icon="facebook"
+              content="Login with Facebook"
+              onClick={userStore.facebookLogin}
+            />
           </>
         )}
       </Container>
     </Segment>
   );
-}
+});
