@@ -59,7 +59,7 @@ namespace API
             app.UseReferrerPolicy(opt => opt.NoReferrer());
             app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
             app.UseXfo(opt => opt.Deny());
-            app.UseCspReportOnly(opt => opt
+            app.UseCsp(opt => opt
                 .BlockAllMixedContent()
                 .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com",
                     "sha256-oFySg82XYSNiSd+Q3yfYPD/rxY6RMDMJ0KxzGG74iGM="))
@@ -68,6 +68,7 @@ namespace API
                 .FrameAncestors(s => s.Self())
                 .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com",
                     "https://www.facebook.com",
+                    "https://scontent.fmkz1-1.fna.fbcdn.net",
                     "data:"))
                 .ScriptSources(s => s.Self().CustomSources("sha256-4dmgZ45Vc6ccneK0FxO5qGcYredZ3WyhWhzUc10WWwQ=",
                     "sha256-4yNyqTY7aAgqPUsGwaFucCVoccaCRuXM9v8t921sOUE=",
