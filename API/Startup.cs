@@ -68,7 +68,7 @@ namespace API
                 .FrameAncestors(s => s.Self())
                 .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com",
                     "https://www.facebook.com",
-                    "https://scontent.fmkz1-1.fna.fbcdn.net",
+                    "https://scontent",
                     "data:"))
                 .ScriptSources(s => s.Self().CustomSources("sha256-4dmgZ45Vc6ccneK0FxO5qGcYredZ3WyhWhzUc10WWwQ=",
                     "sha256-4yNyqTY7aAgqPUsGwaFucCVoccaCRuXM9v8t921sOUE=",
